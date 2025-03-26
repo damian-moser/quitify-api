@@ -1,7 +1,22 @@
 spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/quitify
+    username: root
+    password:
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   servlet:
     multipart:
       max-file-size: 6MB
+server:
+  error:
+    include-message: always
 logging:
   file:
     name: logs/application.log
+application:
+  jwt:
+    secret: 13a0f5f18057aa59231e487f3c94dc9d65a2cbcd980747878fbccd4cbad96636

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -111,7 +112,7 @@ public class OCRServiceImpl implements OCRService {
                 DecimalFormat decimalFormat = new DecimalFormat("#0.00", symbols);
                 Number parsedNumber = decimalFormat.parse(sumString);
                 return parsedNumber.floatValue();
-            } catch (Exception ex) {
+            } catch (ParseException ex) {
                 logger.warn("[OCR] Error while parsing sum: {}", ex.getMessage(), ex);
             }
         }
@@ -124,8 +125,7 @@ public class OCRServiceImpl implements OCRService {
         Matcher matcher = pattern.matcher(result);
 
         if (matcher.find() && matcher.groupCount() >= 1) {
-            String symbol = matcher.group(1);
-            return Currency.fromSymbol(symbol).name();
+            return Currency.fromSymbol(matcher.group(1)).name();
         }
         return Currency.CHF.name();
     }
